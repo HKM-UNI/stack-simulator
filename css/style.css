@@ -5,7 +5,7 @@
 #design {
   height: 54.6875rem;
   width: 45rem;
-  background-image: url("img/stack-design.jpg");
+  background-image: url("../img/stack-design.jpg");
   background-size: contain;
   background-repeat: no-repeat;
 }
