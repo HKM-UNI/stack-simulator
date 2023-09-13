@@ -1,0 +1,109 @@
+#editor {
+  min-height: 32rem;
+}
+
+#design {
+  height: 54.6875rem;
+  width: 45rem;
+  background-image: url("/img/stack-design.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#design > * {
+  position: relative;
+  width: 4.9rem;
+  font-size: 12px;
+}
+
+#design .table-responsive {
+  max-height: 9.6rem;
+}
+
+#mar {
+  left: 14.75rem;
+  top: 1.2rem;
+}
+
+#mdr {
+  left: 14.75rem;
+  top: 2.1rem;
+}
+
+#sp {
+  left: 14.75rem;
+  top: 3rem;
+}
+
+#pc {
+  left: 14.75rem;
+  top: 0.4rem;
+}
+
+#ir {
+  left: 14.75rem;
+  top: 1rem;
+}
+
+#cunit {
+  left: 14.75rem;
+  top: -0.5rem;
+  /* width: 6rem; */
+}
+
+#cunit > textarea {
+  height: 4rem;
+}
+
+/* TODO: Mejorar este selector o hacer una clase */
+#alu-x > input,
+#alu-y > input,
+#alu-z > input,
+#flags > input {
+  min-height: unset;
+  height: 1.3rem;
+  width: 3.5rem;
+  font-size: 12px;
+}
+
+#alu-x {
+  top: 2.9rem;
+  left: -0.3rem;
+}
+
+#alu-y {
+  top: 0.47rem;
+  left: 3.9rem;
+}
+
+#flags {
+  top: 0.5rem;
+  left: 5.8rem;
+}
+
+#alu-z {
+  top: -3.75rem;
+  left: 1.9rem;
+}
+
+#data-regs {
+  width: 18rem;
+  left: 29.6rem;
+  bottom: 29rem;
+}
+
+#stack-regs {
+  width: 18rem;
+  left: 29.6rem;
+  bottom: 28rem;
+}
+
+#io {
+  width: 18rem;
+  left: 29.6rem;
+  bottom: 27rem;
+}
+
+#io > textarea {
+  min-height: 8rem;
+}
