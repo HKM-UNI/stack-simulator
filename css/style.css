@@ -53,6 +53,8 @@
 
 #cunit > textarea {
   height: 4rem;
+  max-height: 4rem;
+  min-height: 4rem;
 }
 
 /* TODO: Mejorar este selector o hacer una clase */
