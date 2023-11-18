@@ -46,6 +46,6 @@ const instructionSet = {
     OUT: {
         code: 8,
         type: "addressable",
-    }
+    },
 };
 export { Instruction, instructionSet, syntax };

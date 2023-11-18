@@ -4,9 +4,10 @@ function addRow(tbodyId) {
     const tbody = document.getElementById(tbodyId);
     // based on the last row
     const newRow = (tbody.rows[tbody.rows.length - 1].cloneNode(true));
-    const addressInput = newRow.cells[0].firstChild;
-    const varInput = newRow.cells[1].firstChild;
-    const valueInput = newRow.cells[2].firstChild;
+    const inputElements = newRow.getElementsByTagName("input");
+    const addressInput = inputElements[0];
+    const varInput = inputElements[1];
+    const valueInput = inputElements[2];
     const nexHexAddr = parseInt(addressInput.value, 16) + 1;
     addressInput.value = nexHexAddr.toString(16).toUpperCase().padStart(4, "0");
     varInput.value = "";
