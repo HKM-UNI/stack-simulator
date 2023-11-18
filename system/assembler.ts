@@ -1,5 +1,6 @@
 import { Instruction, instructionSet, syntax } from "./cpu/arch.js";
-import { getDataAddress, getDataValue } from "./memory/data.js";
+import { getDataAddress, getDataValue, processInfo } from "./memory/data.js";
+import { getSourceCode } from "./editor.js";
 
 // Palabra de 16 bits
 const OPCODE_LENGTH = 4;
@@ -66,10 +67,16 @@ function decodeInstruction(content: string) {
 
   if (addressingMode) {
     const operandHexAddr = operand.toString(16).padStart(4, "0");
-    const operandHexValue = getDataValue("main-data", operandHexAddr, "address");
+    const operandHexValue = getDataValue(
+      "main-data",
+      operandHexAddr,
+      "address"
+    );
 
     if (!operandHexValue) {
-      throw new SyntaxError("The operand is an address, but currently points to none.");
+      throw new SyntaxError(
+        "The operand is an address, but currently points to none."
+      );
     }
     // TODO: Check the base of the operand automatically
     // For now it will be a normal integer
@@ -86,17 +93,24 @@ function revParseInstruction(binaryIns: string) {
   for (const operation in instructionSet) {
     const defaultInstruction = instructionSet[operation];
     if (defaultInstruction.code == ins.code) {
-        opName = operation;
+      opName = operation;
     }
   }
   if (!opName) {
     throw new SyntaxError("Couldn't parse Operation Code");
   }
 
-  return `${opName} ${ins.operand}`
+  return `${opName} ${ins.operand}`;
 }
 
-const textInstruction = "PUSH 107"
-const binInstruction = encodeInstruction(textInstruction);
-console.log(`${textInstruction} => ${binInstruction} (base 2)`)
-console.log(`${binInstruction} => ${revParseInstruction(binInstruction)} (text)`)
+function makeObjectCode() {
+  for (const line of getSourceCode()) {
+    if (!line) {
+      processInfo.objectCode.push("");
+    }
+    const objSrc = encodeInstruction(line);
+    processInfo.objectCode.push(objSrc);
+  }
+}
+
+export { makeObjectCode };

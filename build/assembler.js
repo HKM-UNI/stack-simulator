@@ -1,5 +1,6 @@
 import { Instruction, instructionSet, syntax } from "./cpu/arch.js";
-import { getDataAddress, getDataValue } from "./memory/data.js";
+import { getDataAddress, getDataValue, processInfo } from "./memory/data.js";
+import { getSourceCode } from "./editor.js";
 // Palabra de 16 bits
 const OPCODE_LENGTH = 4;
 const ADRESSING_MODE_LENGTH = 1;
@@ -78,7 +79,13 @@ function revParseInstruction(binaryIns) {
     }
     return `${opName} ${ins.operand}`;
 }
-const textInstruction = "PUSH 107";
-const binInstruction = encodeInstruction(textInstruction);
-console.log(`${textInstruction} => ${binInstruction} (base 2)`);
-console.log(`${binInstruction} => ${revParseInstruction(binInstruction)} (text)`);
+function makeObjectCode() {
+    for (const line of getSourceCode()) {
+        if (!line) {
+            processInfo.objectCode.push("");
+        }
+        const objSrc = encodeInstruction(line);
+        processInfo.objectCode.push(objSrc);
+    }
+}
+export { makeObjectCode };
