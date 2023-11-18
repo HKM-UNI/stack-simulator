@@ -1,57 +1,57 @@
-import { Instruction, instructionSet, syntax } from "./cpu/arch.js";
-import { getDataAddress, getDataValue, processInfo } from "./memory/data.js";
+import { instructionSet, syntax } from "./cpu/arch.js";
+import { getDataByAddress, getDataByVariable } from "./memory/data.js";
 import { getSourceCode } from "./editor.js";
+import { Instruction } from "./cpu/interface.js";
 
 // Palabra de 16 bits
 const OPCODE_LENGTH = 4;
-const ADRESSING_MODE_LENGTH = 1;
+// const ADRESSING_MODE_LENGTH = 1;
 const PARAM_LENGTH = 11;
 
 function parseInstruction(text: string) {
   let mnemonic = text.split(" ")[0].toUpperCase();
   const operation = instructionSet[mnemonic];
   if (!operation) {
-    return null;
+    throw new ReferenceError(`The operation "${mnemonic}" doesn't exists.`);
   }
 
   let syntaxChecker = new RegExp(syntax[operation.type], "g");
   const instructionItems = syntaxChecker.exec(text);
 
   if (!instructionItems) {
-    return null;
+    throw new SyntaxError(`Couldn't parse "${text}". Check the syntax.`);
   }
 
   const operationCode = instructionSet[mnemonic].code;
   let addressingMode = 0;
-  let operandData = 0;
+  let operandValue = 0;
 
   if (instructionItems.length < 3) {
     // Doesn't have operands
-    return new Instruction(operationCode, addressingMode, operandData);
+    return new Instruction(operationCode, addressingMode, operandValue);
   }
 
   const operand = instructionItems[2];
-  const dataAdress = getDataAddress("main-data", operand);
+  const operandData = getDataByVariable("main-data", operand);
 
-  if (dataAdress) {
+  if (operandData) {
     addressingMode = 1;
-    operandData = parseInt(dataAdress, 16);
+    if (!operandData.value) {
+      throw new ReferenceError(`The symbol "${operand}" is not initialized.`);
+    }
+    operandValue = operandData.address.parseHex();
   } else {
-    operandData = +operand;
-    if (isNaN(operandData)) {
-      return null;
+    operandValue = +operand;
+    if (isNaN(operandValue)) {
+      throw new ReferenceError(`The symbol "${operand}" is not defined.`);
     }
   }
 
-  return new Instruction(operationCode, addressingMode, operandData);
+  return new Instruction(operationCode, addressingMode, operandValue);
 }
 
 function encodeInstruction(content: string) {
   const ins = parseInstruction(content);
-  if (!ins) {
-    throw new SyntaxError("Syntax Error");
-  }
-
   const code = ins.code.toString(2).padStart(OPCODE_LENGTH, "0");
   const addressMode = ins.addressingMode.toString(2);
   const operand = ins.operand.toString(2).padStart(PARAM_LENGTH, "0");
@@ -60,35 +60,16 @@ function encodeInstruction(content: string) {
 }
 
 function decodeInstruction(content: string) {
-  const operationCode = parseInt(content.substring(0, 4), 2);
-  const addressingMode = parseInt(content.substring(4, 5), 2);
-  let operandBin = content.substring(5);
-  let operand = parseInt(operandBin, 2);
-
-  if (addressingMode) {
-    const operandHexAddr = operand.toString(16).padStart(4, "0");
-    const operandHexValue = getDataValue(
-      "main-data",
-      operandHexAddr,
-      "address",
-    );
-
-    if (!operandHexValue) {
-      throw new SyntaxError(
-        "The operand is an address, but currently points to none.",
-      );
-    }
-    // TODO: Check the base of the operand automatically
-    // For now it will be a normal integer
-    operand = parseInt(operandHexValue);
-  }
+  const operationCode = content.substring(0, 4).parseBin();
+  const addressingMode = content.substring(4, 5).parseBin();
+  const operand = content.substring(5).parseBin();
 
   return new Instruction(operationCode, addressingMode, operand);
 }
 
 // Use for development only
-function revParseInstruction(binaryIns: string) {
-  const ins = decodeInstruction(binaryIns);
+function decodeText(binaryInstruction: string) {
+  const ins = decodeInstruction(binaryInstruction);
   let opName = "";
   for (const operation in instructionSet) {
     const defaultInstruction = instructionSet[operation];
@@ -104,13 +85,17 @@ function revParseInstruction(binaryIns: string) {
 }
 
 function makeObjectCode() {
+  const objCode: string[] = [];
+
   for (const line of getSourceCode()) {
     if (!line) {
-      processInfo.objectCode.push("");
+      objCode.push("");
     }
     const objSrc = encodeInstruction(line);
-    processInfo.objectCode.push(objSrc);
+    objCode.push(objSrc);
   }
+
+  return objCode;
 }
 
-export { makeObjectCode };
+export { makeObjectCode, decodeInstruction };

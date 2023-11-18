@@ -1,4 +1,25 @@
 import { makeObjectCode } from "./assembler.js";
+import { processInfo } from "./memory/data.js";
+import { fetch, execute, resetRegisters } from "./cpu/execution_unit.js";
 
-const buttonMake = <HTMLButtonElement>document.getElementById("btn-make-obj");
-buttonMake.addEventListener("click", makeObjectCode);
+function run() {
+  try {
+    resetRegisters;
+    processInfo.objectCode = makeObjectCode();
+    while (true) {
+      const ins = fetch();
+      if (ins) {
+        execute(ins);
+      } else {
+        break;
+      }
+    }
+  } catch (e: any) {
+    alert(e.message);
+  }
+}
+
+const buttonRun = <HTMLButtonElement>document.getElementById("btn-run");
+const buttonForward = <HTMLButtonElement>document.getElementById("btn-forward");
+const buttonStop = <HTMLButtonElement>document.getElementById("btn-forward");
+buttonRun.addEventListener("click", run);

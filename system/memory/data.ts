@@ -1,6 +1,5 @@
 const ADDRESS_COLUMN = 0;
 const VAR_COLUMN = 1;
-const VALUE_COLUMN = 2;
 
 class ProcessInfo {
   objectCode: string[] = [];
@@ -8,8 +7,43 @@ class ProcessInfo {
 
 var processInfo = new ProcessInfo();
 
-function getData(
-  columnGet: number,
+class DataCell {
+  private _address: HTMLInputElement;
+  private _variable: HTMLInputElement;
+  private _value: HTMLInputElement;
+
+  constructor(dataElements: HTMLCollectionOf<HTMLInputElement>) {
+    this._address = dataElements[0];
+    this._variable = dataElements[1];
+    this._value = dataElements[2];
+  }
+
+  get address() {
+    return this._address.value;
+  }
+
+  set address(value: string) {
+    this._address.value = value;
+  }
+
+  get variable() {
+    return this._variable.value;
+  }
+
+  set variable(value: string) {
+    this._variable.value = value;
+  }
+
+  get value() {
+    return this._value.value;
+  }
+
+  set value(value: string) {
+    this._value.value = value;
+  }
+}
+
+function getDataCell(
   tbodyId: string,
   columnSearch: number,
   searchValue: string,
@@ -17,27 +51,23 @@ function getData(
   const tbody = <HTMLTableSectionElement>document.getElementById(tbodyId);
 
   for (let row of tbody.rows) {
-    const memoryCell = <HTMLInputElement>row.cells[columnSearch].firstChild;
-    const memoryData = <HTMLInputElement>row.cells[columnGet].firstChild;
+    const memoryCell = row.cells[columnSearch].getElementsByTagName("input")[0];
 
     if (memoryCell.value == searchValue) {
-      return memoryData.value;
+      const dataElements = row.getElementsByTagName("input");
+
+      return new DataCell(dataElements);
     }
   }
   return null;
 }
 
-function getDataValue(
-  tbodyId: string,
-  searchValue: string,
-  searchMode = "var",
-) {
-  const columnIndex = searchMode == "var" ? VAR_COLUMN : ADDRESS_COLUMN;
-  return getData(VALUE_COLUMN, tbodyId, columnIndex, searchValue);
+function getDataByAddress(tbodyId: string, address: string) {
+  return getDataCell(tbodyId, ADDRESS_COLUMN, address);
 }
 
-function getDataAddress(tbodyId: string, variable: string) {
-  return getData(ADDRESS_COLUMN, tbodyId, VAR_COLUMN, variable);
+function getDataByVariable(tbodyId: string, variable: string) {
+  return getDataCell(tbodyId, VAR_COLUMN, variable);
 }
 
-export { getDataValue, getDataAddress, processInfo };
+export { getDataByAddress, getDataByVariable, processInfo };
