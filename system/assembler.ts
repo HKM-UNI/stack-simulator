@@ -70,12 +70,12 @@ function decodeInstruction(content: string) {
     const operandHexValue = getDataValue(
       "main-data",
       operandHexAddr,
-      "address"
+      "address",
     );
 
     if (!operandHexValue) {
       throw new SyntaxError(
-        "The operand is an address, but currently points to none."
+        "The operand is an address, but currently points to none.",
       );
     }
     // TODO: Check the base of the operand automatically

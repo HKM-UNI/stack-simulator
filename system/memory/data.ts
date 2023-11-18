@@ -12,7 +12,7 @@ function getData(
   columnGet: number,
   tbodyId: string,
   columnSearch: number,
-  searchValue: string
+  searchValue: string,
 ) {
   const tbody = <HTMLTableSectionElement>document.getElementById(tbodyId);
 
@@ -30,7 +30,7 @@ function getData(
 function getDataValue(
   tbodyId: string,
   searchValue: string,
-  searchMode = "var"
+  searchMode = "var",
 ) {
   const columnIndex = searchMode == "var" ? VAR_COLUMN : ADDRESS_COLUMN;
   return getData(VALUE_COLUMN, tbodyId, columnIndex, searchValue);

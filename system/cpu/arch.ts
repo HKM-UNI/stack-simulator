@@ -52,7 +52,7 @@ const instructionSet: { [key: string]: { code: number; type: string } } = {
   OUT: {
     code: 8,
     type: "addressable",
-  }
+  },
 };
 
 export { Instruction, instructionSet, syntax };

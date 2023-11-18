@@ -10,7 +10,7 @@ function addRow(tbodyId: string) {
   const addressInput = <HTMLInputElement>newRow.cells[0].firstChild;
   const varInput = <HTMLInputElement>newRow.cells[1].firstChild;
   const valueInput = <HTMLInputElement>newRow.cells[2].firstChild;
-  
+
   const nexHexAddr = parseInt(addressInput.value, 16) + 1;
   addressInput.value = nexHexAddr.toString(16).toUpperCase().padStart(4, "0");
   varInput.value = "";
