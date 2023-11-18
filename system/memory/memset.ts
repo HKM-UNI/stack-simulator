@@ -1,12 +1,10 @@
-const InitialRowsNumber = 10;
-
-function addRow(tbodyId: string) {
+function addMemoryRow(tbodyId: string) {
   const tbody = <HTMLTableSectionElement>document.getElementById(tbodyId);
   // based on the last row
   const newRow = <HTMLTableRowElement>(
     tbody.rows[tbody.rows.length - 1].cloneNode(true)
   );
-  
+
   const inputElements = newRow.getElementsByTagName("input");
   const addressInput = inputElements[0];
   const varInput = inputElements[1];
@@ -20,7 +18,4 @@ function addRow(tbodyId: string) {
   tbody.appendChild(newRow);
 }
 
-for (let i = 0; i < InitialRowsNumber; i++) {
-  addRow("main-data");
-  addRow("stack-data");
-}
+export { addMemoryRow };
