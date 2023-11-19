@@ -4,7 +4,7 @@ import { fetch, execute, resetRegisters } from "./cpu/execution_unit.js";
 
 function run() {
   try {
-    resetRegisters;
+    resetRegisters();
     processInfo.objectCode = makeObjectCode();
     while (true) {
       const ins = fetch();

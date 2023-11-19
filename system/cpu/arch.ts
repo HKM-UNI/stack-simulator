@@ -1,4 +1,4 @@
-import { Push } from "../instructions/stack.js";
+import { Push, Pop } from "../instructions/stack.js";
 import { Executable } from "./interface.js";
 
 const syntax: { [key: string]: RegExp } = {
@@ -18,7 +18,7 @@ const instructionSet: {
   POP: {
     code: 1,
     type: "transfer",
-    executor: null,
+    executor: new Pop(),
   },
   ADD: {
     code: 2,

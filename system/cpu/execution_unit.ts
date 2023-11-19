@@ -3,6 +3,7 @@ import { processInfo } from "../memory/data.js";
 import { decodeInstruction } from "../assembler.js";
 import { instructionSet } from "./arch.js";
 import { Instruction, Executable } from "./interface.js";
+import { resetSpOffset } from "../instructions/stack.js";
 
 function fetch(): Instruction | null {
   cpu.MAR = cpu.programCounter;
@@ -54,6 +55,8 @@ function resetRegisters(): void {
   for (const reg of textRegisters) {
     reg.value = "";
   }
+
+  resetSpOffset();
 }
 
 function execute(instruction: Instruction): void {
