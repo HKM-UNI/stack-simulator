@@ -1,6 +1,7 @@
 import { Push, Pop } from "../instructions/stack.js";
 import { Add, Sub, Mul, Div } from "../instructions/arithmetic.js";
 import { Executable } from "./interface.js";
+import { End } from "../instructions/process.js";
 
 const syntax: { [key: string]: RegExp } = {
   addressable: /\s*([a-zA-Z]+)\s+(\d+)\s*/,
@@ -41,10 +42,10 @@ const instructionSet: {
     type: "op",
     executor: new Div(),
   },
-  HALT: {
+  END: {
     code: 6,
     type: "op",
-    executor: null,
+    executor: new End(),
   },
   IN: {
     code: 7,

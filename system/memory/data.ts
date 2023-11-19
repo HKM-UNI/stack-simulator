@@ -3,6 +3,7 @@ const VAR_COLUMN = 1;
 
 class ProcessInfo {
   objectCode: string[] = [];
+  endSignal: boolean = false;
 }
 
 var processInfo = new ProcessInfo();

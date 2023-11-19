@@ -6,12 +6,10 @@ function run() {
   try {
     resetRegisters();
     processInfo.objectCode = makeObjectCode();
-    while (true) {
+    while (!processInfo.endSignal) {
       const ins = fetch();
       if (ins) {
         execute(ins);
-      } else {
-        break;
       }
     }
   } catch (e: any) {

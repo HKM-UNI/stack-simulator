@@ -1,5 +1,5 @@
 import { instructionSet, syntax } from "./cpu/arch.js";
-import { getDataByAddress, getDataByVariable } from "./memory/data.js";
+import { getDataByVariable } from "./memory/data.js";
 import { getSourceCode } from "./editor.js";
 import { Instruction } from "./cpu/interface.js";
 
@@ -9,6 +9,9 @@ const OPCODE_LENGTH = 4;
 const PARAM_LENGTH = 11;
 
 function parseInstruction(text: string) {
+  if (!text) {
+    return null;
+  }
   let mnemonic = text.split(" ")[0].toUpperCase();
   const operation = instructionSet[mnemonic];
   if (!operation) {
@@ -52,6 +55,9 @@ function parseInstruction(text: string) {
 
 function encodeInstruction(content: string) {
   const ins = parseInstruction(content);
+  if (!ins) {
+    return "";
+  }
   const code = ins.code.toString(2).padStart(OPCODE_LENGTH, "0");
   const addressMode = ins.addressingMode.toString(2);
   const operand = ins.operand.toString(2).padStart(PARAM_LENGTH, "0");
@@ -86,10 +92,10 @@ function decodeText(binaryInstruction: string) {
 
 function makeObjectCode() {
   const objCode: string[] = [];
-
-  for (const line of getSourceCode()) {
-    if (!line) {
-      objCode.push("");
+  const sourceCode = getSourceCode();
+  for (const [index, line] of sourceCode.entries()) {
+    if (index == sourceCode.length - 1 && !line.toLowerCase().includes("end")) {
+      throw new SyntaxError('Missing "END" instruction.');
     }
     const objSrc = encodeInstruction(line);
     objCode.push(objSrc);

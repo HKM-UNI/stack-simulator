@@ -8,7 +8,7 @@ function performOp(operation: (x: number, y: number) => number) {
   const topOfStackAddress = cpu.stackPointer.parseHex();
   if (topOfStackAddress == 0) {
     throw new ReferenceError(
-      "There is not enough data in the stack to perform the operation."
+      "There is not enough data in the stack to perform the operation.",
     );
   }
 
@@ -24,7 +24,7 @@ function performOp(operation: (x: number, y: number) => number) {
   cpu.aluFlags = "";
   const result = operation(+nextOfStack.value, +topOfStack.value);
   cpu.aluFlags += `Z=${+(result == 0)}`;
-  cpu.aluFlags += `, O=${+(result > MAX_WORD_VALUE)}`;
+  cpu.aluFlags += `,O=${+(result > MAX_WORD_VALUE)}`;
 
   cpu.stackPointer = nextOfStackAddress;
   nextOfStack.value = result.toString();

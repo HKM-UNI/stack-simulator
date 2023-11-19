@@ -10,15 +10,19 @@ function fetch(): Instruction | null {
   const counter = cpu.programCounter.parseHex();
 
   if (counter == processInfo.objectCode.length) {
+    processInfo.endSignal = true;
     return null;
   }
 
   const nextCounterHex = (counter + 1).asHex16();
-  cpu.aluFlags = "Z=0,Of=0";
+  cpu.aluFlags = "Z=0,O=0";
   cpu.controlUnit = "PCout,MARin,ClrY,SetCin,ADD,Zin";
   cpu.programCounter = cpu.aluZ = nextCounterHex;
 
   const binInstruction = processInfo.objectCode[counter];
+  if (!binInstruction) {
+    return null;
+  }
   const hexInstruction = binInstruction.parseBin().asHex16();
   cpu.instructionRegister = cpu.MDR = hexInstruction;
 
@@ -58,6 +62,7 @@ function resetRegisters(): void {
 
   resetSpOffset();
   clearStackData();
+  processInfo.endSignal = false;
 }
 
 function execute(instruction: Instruction): void {
