@@ -1,4 +1,5 @@
 import { Push, Pop } from "../instructions/stack.js";
+import { Add, Sub, Mul, Div } from "../instructions/arithmetic.js";
 import { Executable } from "./interface.js";
 
 const syntax: { [key: string]: RegExp } = {
@@ -23,22 +24,22 @@ const instructionSet: {
   ADD: {
     code: 2,
     type: "op",
-    executor: null,
+    executor: new Add(),
   },
   SUB: {
     code: 3,
     type: "op",
-    executor: null,
+    executor: new Sub(),
   },
   MUL: {
     code: 4,
     type: "op",
-    executor: null,
+    executor: new Mul(),
   },
   DIV: {
     code: 5,
     type: "op",
-    executor: null,
+    executor: new Div(),
   },
   HALT: {
     code: 6,
