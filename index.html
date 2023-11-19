@@ -304,5 +304,20 @@
     <script type="module" src="build/editor.js"></script>
     <script type="module" src="build/events.js"></script>
     <script type="module" src="build/init.js"></script>
+
+    <!-- Enable hex numbering -->
+    <script type="module">
+      const editor = ace.edit("editor");
+      // Monkey patch for the gutter
+      editor.session.gutterRenderer = {
+        getWidth: function (session, lastLineText, config) {
+          return lastLineText.length * config.characterWidth; //desired gutter width in pixels
+        },
+        getText: function (session, row) {
+          return row.toString(16).padStart(4, "0"); // Base 16
+        },
+      };
+      editor.renderer.updateFull();
+    </script>
   </body>
 </html>
