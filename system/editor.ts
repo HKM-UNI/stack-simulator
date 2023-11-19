@@ -8,5 +8,4 @@ editor.setFontSize("24px");
 function getSourceCode() {
   return editor.getValue().split("\n");
 }
-
 export { getSourceCode };

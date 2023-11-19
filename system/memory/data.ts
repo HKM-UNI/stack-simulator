@@ -2,8 +2,25 @@ const ADDRESS_COLUMN = 0;
 const VAR_COLUMN = 1;
 
 class ProcessInfo {
-  objectCode: string[] = [];
-  endSignal: boolean = false;
+  private _objectCode: string[] = [];
+  private _isRunning: boolean = false;
+
+  get objectCode() {
+    return this._objectCode;
+  }
+  get isRunning() {
+    return this._isRunning;
+  }
+
+  deallocate() {
+    this._objectCode = [];
+    this._isRunning = false;
+  }
+
+  init(code: string[]) {
+    this._objectCode = code;
+    this._isRunning = true;
+  }
 }
 
 var processInfo = new ProcessInfo();

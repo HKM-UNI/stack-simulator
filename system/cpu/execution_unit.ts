@@ -10,7 +10,7 @@ function fetch(): Instruction | null {
   const counter = cpu.programCounter.parseHex();
 
   if (counter == processInfo.objectCode.length) {
-    processInfo.endSignal = true;
+    processInfo.deallocate();
     return null;
   }
 
@@ -62,7 +62,6 @@ function resetRegisters(): void {
 
   resetSpOffset();
   clearStackData();
-  processInfo.endSignal = false;
 }
 
 function execute(instruction: Instruction): void {
