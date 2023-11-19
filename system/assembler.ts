@@ -93,14 +93,19 @@ function decodeText(binaryInstruction: string) {
 function makeObjectCode() {
   const objCode: string[] = [];
   const sourceCode = getSourceCode();
+
   for (const [index, line] of sourceCode.entries()) {
     if (index == sourceCode.length - 1 && !line.toLowerCase().includes("end")) {
       throw new SyntaxError('Missing "END" instruction.');
     }
-    const objSrc = encodeInstruction(line);
-    objCode.push(objSrc);
+    // Ignore entire comment lines
+    if (line.startsWith(";")) {
+      objCode.push("");
+    } else {
+      const objSrc = encodeInstruction(line);
+      objCode.push(objSrc);
+    }
   }
-
   return objCode;
 }
 
