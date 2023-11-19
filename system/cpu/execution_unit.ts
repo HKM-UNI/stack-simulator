@@ -1,5 +1,5 @@
 import cpu from "./components.js";
-import { processInfo } from "../memory/data.js";
+import { clearStackData, processInfo } from "../memory/data.js";
 import { decodeInstruction } from "../assembler.js";
 import { instructionSet } from "./arch.js";
 import { Instruction, Executable } from "./interface.js";
@@ -57,6 +57,7 @@ function resetRegisters(): void {
   }
 
   resetSpOffset();
+  clearStackData();
 }
 
 function execute(instruction: Instruction): void {

@@ -40,7 +40,9 @@ export class Pop implements Executable {
 
     const topOfStack = getDataByAddress("stack-data", cpu.stackPointer)!;
     if (!topOfStack.value) {
-      throw new ReferenceError("There is no data at the address of the stack pointer.");
+      throw new ReferenceError(
+        "There is no data at the address of the stack pointer.",
+      );
     }
 
     let nextStackPointer = cpu.stackPointer.parseHex();
@@ -56,7 +58,7 @@ export class Pop implements Executable {
     cpu.MAR = hexOperand;
     const actualData = getDataByAddress("main-data", hexOperand)!;
     // cpu.controlUnit = "IR(5-16)out, MARin, READ";
-    
+
     cpu.MDR = (+topOfStack.value).asHex16();
     cpu.controlUnit = "SPout, MDRin, WRITE";
     actualData.value = topOfStack.value;

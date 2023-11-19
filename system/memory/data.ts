@@ -70,4 +70,16 @@ function getDataByVariable(tbodyId: string, variable: string) {
   return getDataCell(tbodyId, VAR_COLUMN, variable);
 }
 
-export { getDataByAddress, getDataByVariable, processInfo };
+function clearStackData() {
+  const stackTbody = <HTMLTableSectionElement>(
+    document.getElementById("stack-data")
+  );
+
+  for (let row of stackTbody.rows) {
+    const inputCells = row.getElementsByTagName("input");
+    inputCells[1].value = ""; // Variable
+    inputCells[2].value = ""; // Value
+  }
+}
+
+export { getDataByAddress, getDataByVariable, clearStackData, processInfo };
