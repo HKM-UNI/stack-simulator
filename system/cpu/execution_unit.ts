@@ -14,9 +14,12 @@ function fetch(): Instruction | null {
     return null;
   }
 
-  const nextCounterHex = (counter + 1).asHex16();
+  cpu.aluX = cpu.programCounter;
+  cpu.aluY = "0000";
   cpu.aluFlags = "Z=0,O=0";
   cpu.controlUnit = "PCout,MARin,ClrY,SetCin,ADD,Zin";
+
+  const nextCounterHex = (counter + 1).asHex16();
   cpu.programCounter = cpu.aluZ = nextCounterHex;
 
   const binInstruction = processInfo.objectCode[counter];
