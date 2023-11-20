@@ -21,8 +21,12 @@ function performOp(operation: (x: number, y: number) => number) {
   cpu.MAR = nextOfStackAddress;
   cpu.MDR = (+nextOfStack.value).asHex16();
 
+  cpu.aluX = (+nextOfStack.value).asHex16();
+  cpu.aluY = (+topOfStack.value).asHex16();
   cpu.aluFlags = "";
+  
   const result = operation(+nextOfStack.value, +topOfStack.value);
+  cpu.aluZ = result.asHex16();
   cpu.aluFlags += `Z=${+(result == 0)}`;
   cpu.aluFlags += `,O=${+(result > MAX_WORD_VALUE)}`;
 
