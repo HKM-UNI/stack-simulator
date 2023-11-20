@@ -53,15 +53,16 @@ td > input {
 }
 
 #cunit {
-  left: 14.75rem;
+  left: 14.05rem;
   top: -0.5rem;
-  /* width: 6rem; */
+  width: 6.4rem;
 }
 
 #cunit > textarea {
   height: 4rem;
-  max-height: 4rem;
-  min-height: 4rem;
+  max-height: 5rem;
+  min-height: 5rem;
+  width: 6.4rem;
 }
 
 /* TODO: Mejorar este selector o hacer una clase */
@@ -85,9 +86,13 @@ td > input {
   left: 3.9rem;
 }
 
+#flags > input {
+  width: 4rem;
+}
+
 #flags {
   top: 0.5rem;
-  left: 5.8rem;
+  left: 5.6rem;
 }
 
 #alu-z {
@@ -98,19 +103,19 @@ td > input {
 #data-regs {
   width: 18rem;
   left: 29.6rem;
-  bottom: 29rem;
+  bottom: 30rem;
 }
 
 #stack-regs {
   width: 18rem;
   left: 29.6rem;
-  bottom: 28rem;
+  bottom: 29rem;
 }
 
 #io {
   width: 18rem;
   left: 29.6rem;
-  bottom: 27rem;
+  bottom: 28rem;
 }
 
 #io > textarea {
