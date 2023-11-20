@@ -92,17 +92,21 @@ function decodeText(binaryInstruction: string) {
 
 function makeObjectCode() {
   const objCode: string[] = [];
-  const sourceCode = getSourceCode().split("\n");
+  const sourceCode = getSourceCode();
 
-  for (const [index, line] of sourceCode.entries()) {
-    if (index == sourceCode.length - 1 && !line.toLowerCase().includes("end")) {
-      throw new SyntaxError('Missing "END" instruction.');
-    }
+  // Check that "END" is present and at the beginning of a line
+  //   with or without additional spaces.
+  if (!/\n\s*end/.test(sourceCode.toLocaleLowerCase())) {
+    throw new SyntaxError('Missing "END" instruction.');
+  }
+
+  for (const line of sourceCode.split("\n")) {
+    const trimmedLine = line.trim();
     // Ignore entire comment lines
-    if (line.startsWith(";")) {
+    if (trimmedLine.startsWith(";")) {
       objCode.push("");
     } else {
-      const objSrc = encodeInstruction(line);
+      const objSrc = encodeInstruction(trimmedLine);
       objCode.push(objSrc);
     }
   }

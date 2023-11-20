@@ -4,9 +4,9 @@ import { Executable } from "./interface.js";
 import { End } from "../instructions/process.js";
 
 const syntax: { [key: string]: RegExp } = {
-  addressable: /\s*([a-zA-Z]+)\s+(\d+)\s*/,
-  op: /\s*([a-zA-Z]+)\s*/,
-  transfer: /\s*([a-zA-Z]+)\s+(\d+|[a-zA-Z_][a-zA-Z0-9_]*)\s*/,
+  addressable: /([a-zA-Z]+)\s+(\d+)/,
+  op: /([a-zA-Z]+)/,
+  transfer: /([a-zA-Z]+)\s+(\d+|[a-zA-Z_][a-zA-Z0-9_]*)/,
 };
 
 const instructionSet: {
