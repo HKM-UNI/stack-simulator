@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@types/ace": "^0.0.51",
+    "typescript": "^5.2.2"
+  }
+}

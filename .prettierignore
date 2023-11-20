@@ -1,0 +1,4 @@
+*.json
+build
+img
+node_modules

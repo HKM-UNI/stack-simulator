@@ -9,19 +9,6 @@ td > input {
   outline: 0;
 }
 
-/* Hides arrow buttons in numeric inputs */
-/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 #design {
   height: 54.6875rem;
   width: 45rem;
@@ -66,15 +53,16 @@ input[type="number"] {
 }
 
 #cunit {
-  left: 14.75rem;
+  left: 14.05rem;
   top: -0.5rem;
-  /* width: 6rem; */
+  width: 6.4rem;
 }
 
 #cunit > textarea {
   height: 4rem;
-  max-height: 4rem;
-  min-height: 4rem;
+  max-height: 5rem;
+  min-height: 5rem;
+  width: 6.4rem;
 }
 
 /* TODO: Mejorar este selector o hacer una clase */
@@ -98,9 +86,13 @@ input[type="number"] {
   left: 3.9rem;
 }
 
+#flags > input {
+  width: 4rem;
+}
+
 #flags {
   top: 0.5rem;
-  left: 5.8rem;
+  left: 5.6rem;
 }
 
 #alu-z {
@@ -111,21 +103,46 @@ input[type="number"] {
 #data-regs {
   width: 18rem;
   left: 29.6rem;
-  bottom: 29rem;
+  bottom: 30rem;
 }
 
 #stack-regs {
   width: 18rem;
   left: 29.6rem;
+  bottom: 29rem;
+}
+
+#switch {
+  left: 40.75rem;
   bottom: 28rem;
 }
 
-#io {
-  width: 18rem;
-  left: 29.6rem;
-  bottom: 27rem;
+#switch > input {
+  width: 2.7rem;
+  height: 1.4rem;
 }
 
-#io > textarea {
-  min-height: 8rem;
+#port0 {
+  left: 34rem;
+  bottom: 28.95rem;
+}
+
+#port1 {
+  left: 34rem;
+  bottom: 28.4rem;
+}
+
+#port0 > input,
+#port1 > input {
+  min-height: unset;
+  height: 1.5rem;
+  font-size: 15px;
+  width: 5.6rem;
+  font-family: "Roboto Mono", Courier, monospace;
+}
+
+#img-led {
+  left: 39.65rem;
+  bottom: 29rem;
+  transform: scale(0.6);
 }

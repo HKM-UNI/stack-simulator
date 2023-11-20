@@ -1,145 +1,400 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Simulator - HKM</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Simulator - HKM</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ace-builds@1.24.2/css/ace.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/bb648b716e.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.24.2/css/ace.min.css">
-</head>
-
-<body>
-  <!-- Responsive navbar-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Stack Machine Simulator</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-          class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">Menu</a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Some action</a></li>
-              <li><a class="dropdown-item" href="#">Another Action</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
+  <body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fa-solid fa-layer-group" style="color: #ececec"></i>
+          &nbsp; Stack Machine Simulator
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button id="btn-stop" class="nav-link invisible">
+                <i class="fa-solid fa-stop" style="color: #b71c1c"></i> &nbsp;
+                Stop
+              </button>
+            </li>
+            <li class="nav-item">
+              <button id="btn-run" class="nav-link">
+                <i class="fa-solid fa-play" style="color: #43a047"></i> &nbsp;
+                Run
+              </button>
+            </li>
+            <li class="nav-item">
+              <button id="btn-forward" class="nav-link">
+                <i class="fa-solid fa-forward" style="color: #1565c0"></i>
+                &nbsp; Step
+              </button>
+            </li>
+            &ensp; &ensp;
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-pen-to-square" style="color: #ececec"></i>
+                &nbsp; Edit</a
+              >
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <li>
+                  <input
+                    type="file"
+                    class="d-none"
+                    id="srcfile-selector"
+                    accept=".as, .asm"
+                  />
+                  <button id="btn-upload-src" class="dropdown-item">
+                    <i class="fa-solid fa-upload"></i>
+                    &nbsp; Load source code
+                  </button>
+                </li>
+                <li>
+                  <button id="btn-download-src" class="dropdown-item">
+                    <i class="fa-solid fa-code"></i>
+                    &nbsp; Download source code
+                  </button>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <button id="btn-download-obj" class="dropdown-item">
+                    <img src="img/binary.svg" alt="BinIcon" />
+                    &nbsp; Download object code
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">
+                <i class="fa-solid fa-address-card" style="color: #ececec"></i>
+                &nbsp; About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container-fluid py-4">
+      <div class="row justify-content-center">
+        <div class="col-md-4 col-xl-3">
+          <div id="editor">PUSH 5</div>
+        </div>
+        <div id="design" class="col-md-8 col-xl-9">
+          <div id="mar">
+            MAR
+            <input
+              type="text"
+              id="input-mar"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="mdr">
+            MDR
+            <input
+              type="text"
+              id="input-mdr"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="sp">
+            SP
+            <input
+              type="text"
+              id="input-sp"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="alu-x">
+            &ensp;X
+            <input
+              type="text"
+              id="input-alu-x"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="alu-y">
+            &ensp;Y
+            <input
+              type="text"
+              id="input-alu-y"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="pc">
+            PC
+            <input
+              type="text"
+              id="input-pc"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="ir">
+            IR
+            <input
+              type="text"
+              id="input-ir"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="flags">
+            &ensp;F
+            <input
+              type="text"
+              id="input-flags"
+              value=""
+              class="form-control form-control-sm text-reg"
+              readonly
+            />
+          </div>
+          <div id="cunit">
+            <textarea
+              id="txtarea-cunit"
+              type="text"
+              wrap="hard"
+              class="form-control form-control-sm text-reg"
+              readonly
+            ></textarea>
+            <div class="text-center">Control Unit</div>
+          </div>
+          <div id="alu-z">
+            &ensp;Z
+            <input
+              type="text"
+              id="input-alu-z"
+              value="0000"
+              class="form-control form-control-sm hex-reg"
+              readonly
+            />
+          </div>
+          <div id="data-regs">
+            &ensp;Data
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-hover table-bordered table-sm"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">Address</th>
+                    <th scope="col">Var</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="main-data">
+                  <tr>
+                    <td>
+                      <input
+                        tabindex="-1"
+                        type="text"
+                        name="address"
+                        class="w-100 text-end"
+                        value="0000"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input type="text" name="var" class="w-100 text-end" />
+                    </td>
+                    <td>
+                      <input type="text" name="value" class="w-100 text-end" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="stack-regs">
+            &ensp;Stack
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-hover table-bordered table-sm"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">Address</th>
+                    <th scope="col">Var</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="stack-data">
+                  <tr>
+                    <td>
+                      <input
+                        tabindex="-1"
+                        type="text"
+                        name="address"
+                        class="w-100 text-end"
+                        value="0000"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="var"
+                        class="w-100 text-end"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="value"
+                        class="w-100 text-end"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="switch" class="form-check form-switch">
+            <input
+              id="input-switch"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+            />
+          </div>
+          <div id="port0">
+            &ensp;Port 0
+            <input
+              type="text"
+              id="input-port0"
+              value="00000000"
+              class="form-control form-control-sm"
+              readonly
+            />
+          </div>
+          <div id="port1">
+            &ensp;Port 1
+            <input
+              type="text"
+              id="input-port1"
+              value="00000000"
+              class="form-control form-control-sm"
+              readonly
+            />
+          </div>
+          <img id="img-led" src="img/led-off.png" alt="led-status" />
+        </div>
       </div>
     </div>
-  </nav>
-  <!-- Page content-->
-  <div class="container-fluid py-4">
-    <div class="row justify-content-center">
-      <div class="col-md-4 col-xl-3">
-        <div id="editor">Code Editor</div>
-      </div>
-      <div id="design" class="col-md-8 col-xl-9">
-        <div id="mar">MAR
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="mdr">MDR
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="sp">SP
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="alu-x">&ensp;X
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="alu-y">&ensp;Y
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="pc">PC
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="ir">IR
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="flags">&ensp;F
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="cunit">
-          <textarea type="text" class="form-control form-control-sm"></textarea>
-          Control Unit
-        </div>
-        <div id="alu-z">&ensp;Z
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div id="data-regs">&ensp;Data
-          <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered table-sm ">
-              <thead>
-                <tr>
-                  <th scope="col">Address</th>
-                  <th scope="col">Var</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
-              <tbody id="main-data">
-                <tr>
-                  <td><input tabindex="-1" type="number" name="address" class="w-100 text-end" value="0000" readonly/></td>
-                  <td><input type="number" name="var" class="w-100 text-end" /></td>
-                  <td><input type="number" name="value" class="w-100 text-end" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="stack-regs">&ensp;Stack
-          <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered table-sm ">
-              <thead>
-                <tr>
-                  <th scope="col">Address</th>
-                  <th scope="col">Var</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
-              <tbody id="stack-data">
-                <tr>
-                  <td><input tabindex="-1" type="number" name="address" class="w-100 text-end" value="0000" readonly/></td>
-                  <td><input type="number" name="var" class="w-100 text-end" /></td>
-                  <td><input type="number" name="value" class="w-100 text-end" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="io">
-          &ensp;I/O
-          <textarea type="text" class="form-control"></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Bootstrap core JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
+    <!-- Bootstrap core JS-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Ace JS-->
-  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.24.2/src-min-noconflict/ace.min.js"></script>
+    <!-- Ace JS-->
+    <script type="importmap">
+      {
+        "imports": {
+          "ace": "https://cdn.jsdelivr.net/npm/ace-builds@1.24.2/src-min-noconflict/ace.min.js"
+        }
+      }
+    </script>
 
-  <!-- Custom Scripts -->
-  <script src="js/script.js"></script>
-  <script src="js/memset.js"></script>
-</body>
+    <script type="module">
+      import "ace";
+      ace.config.set(
+        "basePath",
+        "https://cdn.jsdelivr.net/npm/ace-builds@1.24.2/src-min-noconflict",
+      );
+    </script>
 
+    <!-- Custom Scripts -->
+    <script type="module" src="build/editor.js"></script>
+    <script type="module" src="build/run_actions.js"></script>
+    <script type="module" src="build/edit_actions.js"></script>
+    <script type="module" src="build/init.js"></script>
+
+    <!-- Enable hex numbering -->
+    <script type="module">
+      const editor = ace.edit("editor");
+      // Monkey patch for the gutter
+      editor.session.gutterRenderer = {
+        getWidth: function (session, lastLineText, config) {
+          return lastLineText.length * config.characterWidth; //desired gutter width in pixels
+        },
+        getText: function (session, row) {
+          return row.toString(16).padStart(4, "0"); // Base 16
+        },
+      };
+      editor.renderer.updateFull();
+    </script>
+  </body>
 </html>
