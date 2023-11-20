@@ -1,6 +1,7 @@
 import { makeObjectCode } from "./assembler.js";
-import { processInfo } from "./memory/data.js";
+import { processInfo, toggleMainDataReadonly } from "./memory/data.js";
 import { fetch, execute, resetRegisters } from "./cpu/execution_unit.js";
+import * as editor from "./editor.js";
 
 const buttonRun = <HTMLButtonElement>document.getElementById("btn-run");
 const buttonForward = <HTMLButtonElement>document.getElementById("btn-forward");
@@ -9,6 +10,7 @@ const buttonStop = <HTMLButtonElement>document.getElementById("btn-stop");
 function prepare() {
   try {
     resetRegisters();
+    editor.resetMarker();
     processInfo.init(makeObjectCode());
   } catch (e: any) {
     alert(e.message);
@@ -33,21 +35,34 @@ function run() {
   }
 }
 
+function toggleDebugMode(extraSetup: () => void = () => {}) {
+  editor.toggleReadonly();
+  toggleMainDataReadonly();
+  extraSetup();
+}
+
 function step() {
   if (!processInfo.isRunning) {
-    buttonStop.classList.toggle("invisible");
-    prepare();
+    toggleDebugMode(() => {
+      prepare();
+      buttonStop.classList.remove("invisible");
+    });
   }
+  editor.highlightNextLine();
   tryRun();
   if (!processInfo.isRunning) {
-    buttonStop.classList.toggle("invisible");
+    toggleDebugMode(() => {
+      buttonStop.classList.add("invisible");
+    });
   }
 }
 
 function stop() {
+  buttonStop.classList.add("invisible");
   processInfo.deallocate();
   resetRegisters();
-  buttonStop.classList.toggle("invisible");
+  // This is necessary because stop can always be called while debugging.
+  toggleDebugMode(editor.resetMarker);
 }
 
 buttonRun.addEventListener("click", run);

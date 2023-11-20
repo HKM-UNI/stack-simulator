@@ -100,4 +100,22 @@ function clearStackData() {
   }
 }
 
-export { getDataByAddress, getDataByVariable, clearStackData, processInfo };
+function toggleMainDataReadonly() {
+  const dataTbody = <HTMLTableSectionElement>(
+    document.getElementById("main-data")
+  );
+
+  for (let row of dataTbody.rows) {
+    const inputCells = row.getElementsByTagName("input");
+    inputCells[1].readOnly = !inputCells[1].readOnly;
+    inputCells[2].readOnly = !inputCells[2].readOnly;
+  }
+}
+
+export {
+  getDataByAddress,
+  getDataByVariable,
+  clearStackData,
+  toggleMainDataReadonly,
+  processInfo,
+};
