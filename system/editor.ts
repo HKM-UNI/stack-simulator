@@ -15,7 +15,11 @@ var marker: AceMarker;
 var markerLine = 0;
 
 function getSourceCode() {
-  return editor.getValue().split("\n");
+  return editor.getValue();
+}
+
+function setSourceCode(code: string) {
+  editor.setValue(code);
 }
 
 function toggleReadonly() {
@@ -43,4 +47,10 @@ function highlightNextLine() {
   markerLine += 1;
 }
 
-export { getSourceCode, toggleReadonly, highlightNextLine, resetMarker };
+export {
+  getSourceCode,
+  setSourceCode,
+  toggleReadonly,
+  highlightNextLine,
+  resetMarker,
+};

@@ -92,7 +92,7 @@ function decodeText(binaryInstruction: string) {
 
 function makeObjectCode() {
   const objCode: string[] = [];
-  const sourceCode = getSourceCode();
+  const sourceCode = getSourceCode().split("\n");
 
   for (const [index, line] of sourceCode.entries()) {
     if (index == sourceCode.length - 1 && !line.toLowerCase().includes("end")) {

@@ -66,6 +66,51 @@
               </button>
             </li>
             &ensp; &ensp;
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-pen-to-square" style="color: #ececec"></i>
+                &nbsp; Edit</a
+              >
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <li>
+                  <input
+                    type="file"
+                    class="d-none"
+                    id="srcfile-selector"
+                    accept=".as, .asm"
+                  />
+                  <button id="btn-upload-src" class="dropdown-item">
+                    <i class="fa-solid fa-upload"></i>
+                    &nbsp; Load source code
+                  </button>
+                </li>
+                <li>
+                  <button id="btn-download-src" class="dropdown-item">
+                    <i class="fa-solid fa-code"></i>
+                    &nbsp; Download source code
+                  </button>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <button id="btn-download-obj" class="dropdown-item">
+                    <img src="img/binary.svg" alt="BinIcon" />
+                    &nbsp; Download object code
+                  </button>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">
                 <i class="fa-solid fa-address-card" style="color: #ececec"></i>
@@ -303,6 +348,7 @@
     <!-- Custom Scripts -->
     <script type="module" src="build/editor.js"></script>
     <script type="module" src="build/run_actions.js"></script>
+    <script type="module" src="build/edit_actions.js"></script>
     <script type="module" src="build/init.js"></script>
 
     <!-- Enable hex numbering -->
