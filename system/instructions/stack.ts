@@ -1,6 +1,6 @@
 import cpu from "../cpu/components.js";
 import { Instruction, Executable } from "../cpu/interface.js";
-import { getDataByAddress } from "../memory/data.js";
+import { getDataByAddress, DataCell } from "../memory/data.js";
 
 var spOffset = 0;
 
@@ -32,27 +32,34 @@ export class Push implements Executable {
   }
 }
 
+export function deStack(): DataCell {
+  const topOfStack = getDataByAddress("stack-data", cpu.stackPointer)!;
+
+  if (!topOfStack.value) {
+    throw new ReferenceError(
+      "There is no data at the address of the stack pointer.",
+    );
+  }
+
+  let nextStackPointer = cpu.stackPointer.parseHex();
+  // Avoids going negative
+  if (nextStackPointer == 0) {
+    resetSpOffset();
+  } else {
+    nextStackPointer -= 1;
+  }
+  cpu.stackPointer = nextStackPointer.asHex16();
+
+  return topOfStack;
+}
+
 export class Pop implements Executable {
   run(instruction: Instruction) {
     if (!instruction.addressingMode) {
       throw new ReferenceError("You must 'POP' to a variable in main memory");
     }
 
-    const topOfStack = getDataByAddress("stack-data", cpu.stackPointer)!;
-    if (!topOfStack.value) {
-      throw new ReferenceError(
-        "There is no data at the address of the stack pointer.",
-      );
-    }
-
-    let nextStackPointer = cpu.stackPointer.parseHex();
-    // Avoids going negative
-    if (nextStackPointer == 0) {
-      resetSpOffset();
-    } else {
-      nextStackPointer -= 1;
-    }
-    cpu.stackPointer = nextStackPointer.asHex16();
+    const topOfStack = deStack();
 
     const hexOperand = instruction.operand.asHex16();
     cpu.MAR = hexOperand;

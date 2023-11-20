@@ -112,12 +112,37 @@ td > input {
   bottom: 29rem;
 }
 
-#io {
-  width: 18rem;
-  left: 29.6rem;
+#switch {
+  left: 40.75rem;
   bottom: 28rem;
 }
 
-#io > textarea {
-  min-height: 8rem;
+#switch > input {
+  width: 2.7rem;
+  height: 1.4rem;
+}
+
+#port0 {
+  left: 34rem;
+  bottom: 28.95rem;
+}
+
+#port1 {
+  left: 34rem;
+  bottom: 28.4rem;
+}
+
+#port0 > input,
+#port1 > input {
+  min-height: unset;
+  height: 1.5rem;
+  font-size: 15px;
+  width: 5.6rem;
+  font-family: "Roboto Mono", Courier, monospace;
+}
+
+#img-led {
+  left: 39.65rem;
+  bottom: 29rem;
+  transform: scale(0.6);
 }

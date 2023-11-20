@@ -118,4 +118,5 @@ export {
   clearStackData,
   toggleMainDataReadonly,
   processInfo,
+  DataCell,
 };

@@ -13,6 +13,7 @@ for (let i = 0; i < initialStackRows; i++) {
 declare global {
   export interface Number {
     asHex16(): string;
+    asBin8(): string;
   }
   export interface String {
     parseBin(): number;
@@ -22,6 +23,10 @@ declare global {
 
 Number.prototype.asHex16 = function (this: number) {
   return this.toString(16).padStart(4, "0");
+};
+
+Number.prototype.asBin8 = function (this: number) {
+  return this.toString(2).padStart(8, "0");
 };
 
 String.prototype.parseBin = function (this: string) {

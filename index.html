@@ -27,6 +27,12 @@
       src="https://kit.fontawesome.com/bb648b716e.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -313,15 +319,36 @@
               </table>
             </div>
           </div>
-          <div id="io">
-            &ensp;I/O
-            <textarea
-              type="text"
-              id="txtarea-io"
-              class="form-control text-reg"
-              readonly
-            ></textarea>
+          <div id="switch" class="form-check form-switch">
+            <input
+              id="input-switch"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+            />
           </div>
+          <div id="port0">
+            &ensp;Port 0
+            <input
+              type="text"
+              id="input-port0"
+              value="00000000"
+              class="form-control form-control-sm"
+              readonly
+            />
+          </div>
+          <div id="port1">
+            &ensp;Port 1
+            <input
+              type="text"
+              id="input-port1"
+              value="00000000"
+              class="form-control form-control-sm"
+              readonly
+            />
+          </div>
+          <img id="img-led" src="img/led-off.png" alt="led-status" />
         </div>
       </div>
     </div>

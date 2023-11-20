@@ -2,6 +2,7 @@ import { Push, Pop } from "../instructions/stack.js";
 import { Add, Sub, Mul, Div } from "../instructions/arithmetic.js";
 import { Executable } from "./interface.js";
 import { End } from "../instructions/process.js";
+import { Input, Output } from "../instructions/io.js";
 
 const syntax: { [key: string]: RegExp } = {
   addressable: /([a-zA-Z]+)\s+(\d+)/,
@@ -50,12 +51,12 @@ const instructionSet: {
   IN: {
     code: 7,
     type: "addressable",
-    executor: null,
+    executor: new Input(),
   },
   OUT: {
     code: 8,
     type: "addressable",
-    executor: null,
+    executor: new Output(),
   },
 };
 

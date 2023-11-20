@@ -12,7 +12,11 @@ const aluZ = <HTMLInputElement>document.getElementById("input-alu-z");
 const controlUnit = <HTMLTextAreaElement>(
   document.getElementById("txtarea-cunit")
 );
-const ioRegister = <HTMLTextAreaElement>document.getElementById("txtarea-io");
+
+const port0 = <HTMLInputElement>document.getElementById("input-port0");
+const inputSwitch = <HTMLInputElement>document.getElementById("input-switch");
+const port1 = <HTMLInputElement>document.getElementById("input-port1");
+const led = <HTMLImageElement>document.getElementById("img-led");
 
 class CpuHardware {
   get MAR() {
@@ -75,14 +79,39 @@ class CpuHardware {
   set controlUnit(value) {
     controlUnit.value = value;
   }
-  get ioRegister() {
-    return ioRegister.value;
+  readPort(n: number) {
+    if (n == 0) {
+      return +port0.value;
+    } else {
+      return +port1.value;
+    }
   }
-  set ioRegister(value) {
-    ioRegister.value = value;
+  writePort(n: number, value: number) {
+    if (n == 0) {
+      port0.value = value.asBin8();
+    } else {
+      port1.value = value.asBin8();
+      port1.dispatchEvent(new Event("change"));
+    }
   }
 }
 
 const cpu = new CpuHardware();
+
+inputSwitch.addEventListener("change", () => {
+  // Port 0 toggler
+  cpu.writePort(0, +!cpu.readPort(0));
+});
+
+port1.addEventListener("change", () => {
+  const port1Value = cpu.readPort(1);
+
+  if (port1Value % 2) {
+    // LSB=1
+    led.src = "img/led-on.png";
+  } else {
+    led.src = "img/led-off.png";
+  }
+});
 
 export default cpu;
