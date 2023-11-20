@@ -24,7 +24,7 @@ function performOp(operation: (x: number, y: number) => number) {
   cpu.aluX = (+nextOfStack.value).asHex16();
   cpu.aluY = (+topOfStack.value).asHex16();
   cpu.aluFlags = "";
-  
+
   const result = operation(+nextOfStack.value, +topOfStack.value);
   cpu.aluZ = result.asHex16();
   cpu.aluFlags += `Z=${+(result == 0)}`;
